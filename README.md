@@ -3,9 +3,10 @@
 ### 개발도구
 
 - Server
-  JAVA 8
-  Spring Boot 2.7
-  H2
+
+  1. JAVA 8
+  2. Spring Boot 2.7
+  3. H2
 
 - Client
-  React
+  1. React
