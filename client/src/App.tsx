@@ -1,13 +1,10 @@
 import "./App.css";
-import AddAsset from "./components/pages/AddAsset";
-import GetAsset from "./components/pages/GetAsset";
+import Routes from "./routes/Routes";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">Test</header>
-      <AddAsset />
-      <GetAsset />
+      <Routes />
     </div>
   );
 }
