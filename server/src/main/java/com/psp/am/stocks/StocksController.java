@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 public class StocksController {
     
@@ -17,7 +20,7 @@ public class StocksController {
     
     @PostMapping("stock")
     public boolean addStock(@RequestBody StockDTO dto) {
-        System.out.println(dto);
+        log.info("param => {}", dto.toString());
 
         StockEntity stock = repository.save(dto.getEntity());
         
