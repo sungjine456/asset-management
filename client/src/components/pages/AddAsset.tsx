@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import Asset from "../models/requests/Asset";
 import axios from "axios";
 
-function AddStock() {
+function AddAsset() {
   const {
     register,
     handleSubmit,
@@ -13,6 +13,7 @@ function AddStock() {
       id: "id for test",
       name: "",
       price: 0,
+      count: 0,
     },
   });
 
@@ -24,6 +25,20 @@ function AddStock() {
 
   return (
     <form>
+      <div>
+        <label>아이디</label>
+        <input
+          type="text"
+          placeholder="아이디"
+          aria-invalid={
+            isSubmitted ? (errors.id ? "true" : "false") : undefined
+          }
+          {...register("id", {
+            required: "아이디를 입력해주세요.",
+          })}
+          maxLength={10}
+        ></input>
+      </div>
       <div>
         <label>종목명</label>
         <input
@@ -51,6 +66,19 @@ function AddStock() {
           })}
         ></input>
       </div>
+      <div>
+        <label>갯수</label>
+        <input
+          type="text"
+          placeholder="갯수"
+          aria-invalid={
+            isSubmitted ? (errors.count ? "true" : "false") : undefined
+          }
+          {...register("count", {
+            required: "가격을 입력해주세요.",
+          })}
+        ></input>
+      </div>
       <button type="submit" onClick={handleSubmit(onSubmit)}>
         등록
       </button>
@@ -58,4 +86,4 @@ function AddStock() {
   );
 }
 
-export default AddStock;
+export default AddAsset;
