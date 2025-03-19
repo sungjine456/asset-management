@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import Asset from "../models/requests/Asset";
-import axios from "axios";
+import { post } from "../../servicies/AxiosWrapper";
 
 function AddAsset() {
   const {
@@ -18,7 +18,7 @@ function AddAsset() {
   });
 
   const onSubmit = (data: Asset) => {
-    axios.post("http://localhost:8080/asset", data).then((res) => {
+    post<boolean>("/asset", data).then((res) => {
       console.log(res);
     });
   };

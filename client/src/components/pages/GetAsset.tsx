@@ -1,6 +1,6 @@
-import axios from "axios";
 import { ChangeEvent, useState } from "react";
 import Asset, { EmptyAsset } from "../models/requests/Asset";
+import { get, isError } from "../../servicies/AxiosWrapper";
 
 function GetAsset() {
   const [id, setId] = useState<String>("");
@@ -11,8 +11,10 @@ function GetAsset() {
   };
 
   const onClickHandler = () => {
-    axios.get(`http://localhost:8080/asset/${id}`).then((res) => {
-      setAsset(res.data);
+    get<Asset>(`/asset/${id}`).then((res) => {
+      if (!isError(res)) {
+        setAsset(res);
+      }
     });
   };
 

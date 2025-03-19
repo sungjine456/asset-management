@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import Stock from "../../models/requests/Stock";
-import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import message from "../../../public/locales/messages";
+import { isError, post } from "../../../servicies/AxiosWrapper";
 
 function StockAdd() {
   const navigate = useNavigate();
@@ -20,15 +20,17 @@ function StockAdd() {
   });
 
   const onSubmit = (data: Stock) => {
-    axios
-      .post("http://localhost:8080/stock", data)
-      .then((res: AxiosResponse<string, any>) => {
-        if (res.data === "SUC") {
+    post<string>("/stock", data).then((res) => {
+      if (isError(res)) {
+        alert(res.errorMessage);
+      } else {
+        if (res === "SUC") {
           navigate("/settings/stock/list");
         }
 
-        alert(message[res.data]);
-      });
+        alert(message[res]);
+      }
+    });
   };
 
   return (
