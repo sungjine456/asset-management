@@ -3,7 +3,7 @@ import Stock from "../../models/requests/Stock";
 import { useNavigate } from "react-router-dom";
 import message from "../../../public/locales/messages";
 import { isError, post } from "../../../servicies/AxiosWrapper";
-import { useRef } from "react";
+import React, { useRef } from "react";
 
 function StockAdd() {
   const navigate = useNavigate();

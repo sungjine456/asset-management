@@ -10,3 +10,4 @@
 
 - Client
   1. React
+  2. Vite

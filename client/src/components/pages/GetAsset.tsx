@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import Asset, { EmptyAsset } from "../models/requests/Asset";
 import { get, isError } from "../../servicies/AxiosWrapper";
+import React from "react";
 
 function GetAsset() {
   const [id, setId] = useState<String>("");

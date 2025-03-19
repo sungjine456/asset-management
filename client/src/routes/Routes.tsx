@@ -1,3 +1,4 @@
+import React from "react";
 import { Route, Routes as Router } from "react-router-dom";
 import MainPage from "../components/pages/Main";
 import Layout from "../components/pages/settings/Layout";

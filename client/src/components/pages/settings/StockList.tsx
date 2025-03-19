@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Stock from "../../models/requests/Stock";
 import { Link } from "react-router-dom";
 import { getOrElse } from "../../../servicies/AxiosWrapper";

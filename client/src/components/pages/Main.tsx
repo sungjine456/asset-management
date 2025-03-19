@@ -1,6 +1,7 @@
 import AddAsset from "./AddAsset";
 import GetAsset from "./GetAsset";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
 function Main() {
   const navigate = useNavigate();
