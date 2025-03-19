@@ -3,9 +3,12 @@ import Stock from "../../models/requests/Stock";
 import { useNavigate } from "react-router-dom";
 import message from "../../../public/locales/messages";
 import { isError, post } from "../../../servicies/AxiosWrapper";
+import { useRef } from "react";
 
 function StockAdd() {
   const navigate = useNavigate();
+
+  const codeRef = useRef<HTMLInputElement | null>(null);
 
   const {
     register,
@@ -23,9 +26,12 @@ function StockAdd() {
     post<string>("/stock", data).then((res) => {
       if (isError(res)) {
         alert(res.errorMessage);
+        codeRef.current?.focus();
       } else {
         if (res === "SUC") {
           navigate("/settings/stock/list");
+        } else {
+          codeRef.current?.focus();
         }
 
         alert(message[res]);
@@ -49,6 +55,10 @@ function StockAdd() {
               required: "종목코드를 입력해주세요.",
             })}
             maxLength={10}
+            ref={(e) => {
+              register("code").ref(e);
+              codeRef.current = e;
+            }}
           ></input>
         </div>
         <div>
@@ -65,7 +75,7 @@ function StockAdd() {
             maxLength={10}
           ></input>
         </div>
-        <button type="submit" onClick={handleSubmit(onSubmit)}>
+        <button className="btn" type="submit" onClick={handleSubmit(onSubmit)}>
           등록
         </button>
       </form>
