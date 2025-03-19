@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import Stock from "../../models/requests/Stock";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
+import message from "../../../public/locales/messages";
 
 function StockAdd() {
   const navigate = useNavigate();
@@ -19,14 +20,15 @@ function StockAdd() {
   });
 
   const onSubmit = (data: Stock) => {
-    axios.post("http://localhost:8080/stock", data).then((res) => {
-      if (res.data) {
-        alert("성공");
-        navigate("/settings/stock/list");
-      } else {
-        alert("실패");
-      }
-    });
+    axios
+      .post("http://localhost:8080/stock", data)
+      .then((res: AxiosResponse<string, any>) => {
+        if (res.data === "SUC") {
+          navigate("/settings/stock/list");
+        }
+
+        alert(message[res.data]);
+      });
   };
 
   return (
