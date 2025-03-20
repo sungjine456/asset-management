@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Stock from "../../models/requests/Stock";
+import Stock from "../../../models/requests/Stock";
 import { Link } from "react-router-dom";
-import { getOrElse } from "../../../servicies/AxiosWrapper";
+import { getOrElse } from "../../../../servicies/AxiosWrapper";
 
 function StockList() {
   const [list, setList] = useState<Stock[]>([]);

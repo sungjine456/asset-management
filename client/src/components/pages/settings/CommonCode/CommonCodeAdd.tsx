@@ -1,12 +1,13 @@
 import { useForm } from "react-hook-form";
-import Stock from "../../models/requests/Stock";
-import { useNavigate } from "react-router-dom";
-import message from "../../../public/locales/messages";
-import { isError, post } from "../../../servicies/AxiosWrapper";
+import Common from "../../../models/requests/CommonCode";
+import { useLocation, useNavigate } from "react-router-dom";
+import message from "../../../../public/locales/messages";
+import { isError, post } from "../../../../servicies/AxiosWrapper";
 import React, { useRef } from "react";
 
-function StockAdd() {
+function CommonAdd() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const codeRef = useRef<HTMLInputElement | null>(null);
 
@@ -14,22 +15,23 @@ function StockAdd() {
     register,
     handleSubmit,
     formState: { isSubmitted, errors },
-  } = useForm<Stock>({
+  } = useForm<Common>({
     mode: "onBlur",
     defaultValues: {
       code: "",
+      parent: location.state?.code,
       name: "",
     },
   });
 
-  const onSubmit = (data: Stock) => {
-    post<string>("/stock", data).then((res) => {
+  const onSubmit = (data: Common) => {
+    post<string>("/commonCode", data).then((res) => {
       if (isError(res)) {
         alert(res.errorMessage);
         codeRef.current?.focus();
       } else {
         if (res === "SUC") {
-          navigate("/settings/stock/list");
+          navigate("/settings/commonCode/list");
         } else {
           codeRef.current?.focus();
         }
@@ -41,20 +43,27 @@ function StockAdd() {
 
   return (
     <>
-      <h3>주식 등록</h3>
+      <h3>공통코드 등록</h3>
       <form>
+        {location.state?.code && (
+          <div>
+            <span>상위 공통코드 : {location.state.code}</span>
+            <br />
+            <span>상위 공통코드 이름 : {location.state.name}</span>
+          </div>
+        )}
         <div>
-          <label>종목코드</label>
+          <label>공통코드</label>
           <input
             type="text"
-            placeholder="종목코드"
+            placeholder="공통코드"
             aria-invalid={
               isSubmitted ? (errors.code ? "true" : "false") : undefined
             }
             {...register("code", {
-              required: "종목코드를 입력해주세요.",
+              required: "공통코드를 입력해주세요.",
             })}
-            maxLength={10}
+            maxLength={5}
             ref={(e) => {
               register("code").ref(e);
               codeRef.current = e;
@@ -62,17 +71,16 @@ function StockAdd() {
           ></input>
         </div>
         <div>
-          <label>종목명</label>
+          <label>코드명</label>
           <input
             type="text"
-            placeholder="종목명"
+            placeholder="코드명"
             aria-invalid={
               isSubmitted ? (errors.name ? "true" : "false") : undefined
             }
             {...register("name", {
-              required: "종목명을 입력해주세요.",
+              required: "코드명을 입력해주세요.",
             })}
-            maxLength={10}
           ></input>
         </div>
         <button className="btn" type="submit" onClick={handleSubmit(onSubmit)}>
@@ -83,4 +91,4 @@ function StockAdd() {
   );
 }
 
-export default StockAdd;
+export default CommonAdd;

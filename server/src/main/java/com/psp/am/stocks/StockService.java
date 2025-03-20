@@ -12,10 +12,10 @@ public class StockService {
     @Autowired
     private StocksRepository repository;
 
-    public String addStock(StockDTO dto) {
+    public String addStock(StockDto dto) {
         String result = "SUC";
 
-        if (repository.existsById(dto.code)) {
+        if (repository.existsById(dto.getCode())) {
             return "STOCK_DUP";
         }
 
@@ -28,8 +28,8 @@ public class StockService {
         return result;
     }
 
-    public List<StockDTO> getStocks() {
+    public List<StockDto> getStocks() {
 
-        return repository.findAll().stream().map(s -> new StockDTO(s)).collect(Collectors.toList());
+        return repository.findAll().stream().map(s -> new StockDto(s)).collect(Collectors.toList());
     }
 }

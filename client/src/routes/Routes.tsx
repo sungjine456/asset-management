@@ -3,9 +3,13 @@ import { Route, Routes as Router } from "react-router-dom";
 import MainPage from "../components/pages/Main";
 import Layout from "../components/pages/settings/Layout";
 import Main from "../components/pages/settings/Main";
-import Stock from "../components/pages/settings/StockMain";
-import StockList from "../components/pages/settings/StockList";
-import AddStock from "../components/pages/settings/StockAdd";
+
+import StockList from "../components/pages/settings/Stock/StockList";
+import StockAdd from "../components/pages/settings/Stock/StockAdd";
+import StockMain from "../components/pages/settings/Stock/StockMain";
+import CommonMain from "../components/pages/settings/CommonCode/CommonCodeMain";
+import CommonList from "../components/pages/settings/CommonCode/CommonCodeList";
+import CommonAdd from "../components/pages/settings/CommonCode/CommonCodeAdd";
 
 const Routes = () => {
   return (
@@ -13,9 +17,13 @@ const Routes = () => {
       <Route path="/" element={<MainPage />} />
       <Route path="settings" element={<Layout />}>
         <Route path="main" element={<Main />} />
-        <Route path="stock" element={<Stock />}>
+        <Route path="stock" element={<StockMain />}>
           <Route path="list" element={<StockList />} />
-          <Route path="add" element={<AddStock />} />
+          <Route path="add" element={<StockAdd />} />
+        </Route>
+        <Route path="commonCode" element={<CommonMain />}>
+          <Route path="list" element={<CommonList />} />
+          <Route path="add" element={<CommonAdd />} />
         </Route>
       </Route>
     </Router>

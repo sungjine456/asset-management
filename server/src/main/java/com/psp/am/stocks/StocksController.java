@@ -18,14 +18,14 @@ public class StocksController {
     private StockService service;
     
     @PostMapping("stock")
-    public String addStock(@RequestBody StockDTO dto) {
+    public String addStock(@RequestBody StockDto dto) {
         log.info("param => {}", dto.toString());
 
         return service.addStock(dto);
     }
 
     @GetMapping("stock/list")
-    public List<StockDTO> getStocks() {
+    public List<StockDto> getStocks() {
 
         return service.getStocks();
     }

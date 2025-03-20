@@ -1,4 +1,4 @@
-package com.psp.am.stocks;
+package com.psp.am.commonCode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,17 +9,20 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class StockDto {
+public class CommonCodeDto {
     
     private String code;
+    private String parent;
     private String name;
 
-    public StockDto(StockEntity entity) {
+    public CommonCodeDto(CommonCodeEntity entity) {
         code = entity.getCode();
+        parent = entity.getParent();
         name = entity.getName();
     }
 
-    public StockEntity getEntity() {
-        return new StockEntity(code, name);
+    public CommonCodeEntity getEntity() {
+        
+        return new CommonCodeEntity(code, parent, name);
     }
 }
