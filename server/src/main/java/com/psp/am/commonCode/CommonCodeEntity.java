@@ -2,6 +2,7 @@ package com.psp.am.commonCode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +28,6 @@ public class CommonCodeEntity {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent")
-    @Setter
     private CommonCodeEntity parent;
 
     @Column
@@ -39,5 +39,13 @@ public class CommonCodeEntity {
     public CommonCodeEntity(CommonCodeDto dto) {
         code = dto.getCode();
         name = dto.getName();
+    }
+
+    public void setParent(Optional<CommonCodeEntity> parent) {
+        if (parent.isPresent()) {
+            this.parent = parent.get();
+        } else {
+            this.parent = null;
+        }
     }
 }

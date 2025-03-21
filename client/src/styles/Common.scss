@@ -13,6 +13,7 @@ form {
     padding-left: calc(5% - 4px);
     text-align: left;
 
+    select,
     input {
       display: block;
       width: calc(95% - 4px);
@@ -44,4 +45,16 @@ td {
 
 th {
   background-color: rgb(255, 255, 159);
+}
+
+.ReactModal__Overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .ReactModal__Content {
+    width: 400px;
+    height: 400px;
+    position: static !important;
+  }
 }

@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import Common from "../../../models/requests/CommonCode";
+import CommonCode from "../../../models/requests/CommonCode";
 import { useLocation, useNavigate } from "react-router-dom";
 import message from "../../../../public/locales/messages";
 import { isError, post } from "../../../../servicies/AxiosWrapper";
@@ -15,7 +15,7 @@ function CommonAdd() {
     register,
     handleSubmit,
     formState: { isSubmitted, errors },
-  } = useForm<Common>({
+  } = useForm<CommonCode>({
     mode: "onBlur",
     defaultValues: {
       code: "",
@@ -24,7 +24,7 @@ function CommonAdd() {
     },
   });
 
-  const onSubmit = (data: Common) => {
+  const onSubmit = (data: CommonCode) => {
     post<string>("/commonCode", data).then((res) => {
       if (isError(res)) {
         alert(res.errorMessage);

@@ -22,7 +22,8 @@ const wrapper = async <T>(axiosData: AxiosData): Promise<T | ServerError> => {
   try {
     const response: AxiosResponse<T, any> | false =
       (method === "get" && (await axios.get(url, header))) ||
-      (method === "post" && (await axios.post(url, data, header)));
+      (method === "post" && (await axios.post(url, data, header))) ||
+      (method === "delete" && (await axios.delete(url)));
 
     if (!response) {
       return { errorMessage: "잘못된 HTTP Method" };
@@ -62,6 +63,10 @@ const post = <T>(url: string, data: {}, header: {} = {}) => {
   return wrapper<T>({ method: "post", url, data, header });
 };
 
+const del = <T>(url: string, header: {} = {}) => {
+  return wrapper<T>({ method: "delete", url, header });
+};
+
 const getOrElse = <T>(url: string, header: {} = {}, or: T) => {
   return orElse<T>(wrapper<T>({ method: "get", url, header }), or);
 };
@@ -70,4 +75,4 @@ const postOrElse = <T>(url: string, data: {}, header: {} = {}, or: T) => {
   return orElse<T>(wrapper<T>({ method: "post", url, data, header }), or);
 };
 
-export { get, getOrElse, post, postOrElse, isError };
+export { get, getOrElse, post, postOrElse, del, isError };

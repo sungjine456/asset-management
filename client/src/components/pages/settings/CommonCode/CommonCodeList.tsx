@@ -1,16 +1,52 @@
 import React, { useEffect, useState } from "react";
-import Common from "../../../models/requests/CommonCode";
+import CommonCode, { EmptyCommon } from "../../../models/requests/CommonCode";
 import { Link } from "react-router-dom";
-import { getOrElse } from "../../../../servicies/AxiosWrapper";
+import { getOrElse, del, isError } from "../../../../servicies/AxiosWrapper";
+import messages from "../../../../public/locales/messages";
+import CommonCodeUpdateModal from "./CommonCodeUpdateModal";
 
 function CommonList() {
-  const [list, setList] = useState<Common[]>([]);
+  const [list, setList] = useState<CommonCode[]>([]);
+  const [modalData, setModalData] = useState<CommonCode>(EmptyCommon);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {
-    getOrElse<Common[]>("/commonCode/list", {}, []).then((res) => {
+    getList();
+  }, []);
+
+  const deleteCode = (code: string) => {
+    del<string>(`/commonCode/${code}`).then((res) => {
+      if (isError(res)) {
+        alert(res.errorMessage);
+      } else {
+        if (res === "SUC") {
+          window.location.reload();
+        }
+
+        alert(messages[res]);
+      }
+    });
+  };
+
+  const showUpdateModal = (code: CommonCode) => {
+    setModalData(code);
+    setShowModal(true);
+  };
+
+  const closeModal = (reload: boolean = false) => {
+    setModalData(EmptyCommon);
+    setShowModal(false);
+
+    if (reload) {
+      getList();
+    }
+  };
+
+  const getList = () => {
+    getOrElse<CommonCode[]>("/commonCode/list", {}, []).then((res) => {
       setList(res);
     });
-  }, []);
+  };
 
   return (
     <>
@@ -51,6 +87,18 @@ function CommonList() {
                           추가
                         </Link>
                       )}
+                      <button
+                        className="btn"
+                        onClick={() => showUpdateModal(item)}
+                      >
+                        수정
+                      </button>
+                      <button
+                        className="btn"
+                        onClick={() => deleteCode(item.code)}
+                      >
+                        삭제
+                      </button>
                     </td>
                   </tr>
                 );
@@ -59,6 +107,12 @@ function CommonList() {
           </table>
         </div>
       </div>
+
+      <CommonCodeUpdateModal
+        isOpen={showModal}
+        closeModal={closeModal}
+        data={modalData}
+      />
     </>
   );
 }
