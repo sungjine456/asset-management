@@ -20,7 +20,10 @@ public class CommonCodeService {
         }
 
         CommonCodeEntity newCode = new CommonCodeEntity(dto);
-        newCode.setParent(repository.findById(dto.getParent()));
+        
+        if (dto.getParent() != null) {
+            newCode.setParent(repository.findById(dto.getParent()));
+        }
 
         if (repository.save(newCode) == null) {
             return "FAIL";
