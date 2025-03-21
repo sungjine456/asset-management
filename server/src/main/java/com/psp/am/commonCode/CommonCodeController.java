@@ -19,7 +19,7 @@ public class CommonCodeController {
     private CommonCodeService service;
 
     @PostMapping("commonCode")
-    public String postMethodName(@RequestBody CommonCodeDto dto) {
+    public String addCommon(@RequestBody CommonCodeDto dto) {
         log.info("param => {}", dto);
         
         return service.addCommon(dto);

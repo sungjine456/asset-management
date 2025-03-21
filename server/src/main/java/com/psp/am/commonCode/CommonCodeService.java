@@ -1,6 +1,8 @@
 package com.psp.am.commonCode;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,23 +15,40 @@ public class CommonCodeService {
     private CommonCodeRepository repository;
 
     public String addCommon(CommonCodeDto dto) {
-        String result = "SUC";
-
         if (repository.existsById(dto.getCode())) {
             return "COMMON_CODE_DUP";
         }
 
-        CommonCodeEntity code = repository.save(dto.getEntity());
+        Optional<CommonCodeEntity> parent = repository.findById(dto.getParent());
+        CommonCodeEntity newCode = new CommonCodeEntity(dto);
 
-        if (code == null) {
-            result = "FAIL";
+        if (parent.isPresent()) {
+            newCode.setParent(parent.get());
         }
-        
-        return result;
+
+        if (repository.save(newCode) == null) {
+            return "FAIL";
+        }
+
+        return "SUC";
     }
 
     public List<CommonCodeDto> getCommons() {
 
-        return repository.findAll().stream().map(s -> new CommonCodeDto(s)).collect(Collectors.toList());
+        return repository.findAllByParentIsNull()
+            .stream()
+            .flatMap(e -> resolve(e).stream())
+            .collect(Collectors.toList());
+    }
+
+    private List<CommonCodeDto> resolve(CommonCodeEntity entity) {
+        List<CommonCodeDto> list = new ArrayList<>();
+
+        list.add(new CommonCodeDto(entity));
+        for (CommonCodeEntity e : entity.getChildren()) {
+            list.add(new CommonCodeDto(e));
+        }
+
+        return list;
     }
 }

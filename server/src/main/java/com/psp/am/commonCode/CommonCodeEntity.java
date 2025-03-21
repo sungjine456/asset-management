@@ -1,8 +1,15 @@
 package com.psp.am.commonCode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,15 +25,19 @@ public class CommonCodeEntity {
     @Column(length = 5)
     private String code;
     
-    @Column(length = 5)
-    private String parent;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent")
+    @Setter
+    private CommonCodeEntity parent;
 
     @Column
     private String name;
 
-    public CommonCodeEntity(String code, String parent, String name) {
-        this.code = code;
-        this.parent = parent;
-        this.name = name;
+    @OneToMany(mappedBy = "parent")
+    private List<CommonCodeEntity> children = new ArrayList<>();
+
+    public CommonCodeEntity(CommonCodeDto dto) {
+        code = dto.getCode();
+        name = dto.getName();
     }
 }

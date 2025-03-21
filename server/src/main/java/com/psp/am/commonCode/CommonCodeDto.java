@@ -17,12 +17,9 @@ public class CommonCodeDto {
 
     public CommonCodeDto(CommonCodeEntity entity) {
         code = entity.getCode();
-        parent = entity.getParent();
+        if (entity.getParent() != null) {
+            parent = entity.getParent().getCode();
+        }
         name = entity.getName();
-    }
-
-    public CommonCodeEntity getEntity() {
-        
-        return new CommonCodeEntity(code, parent, name);
     }
 }
