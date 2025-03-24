@@ -2,14 +2,20 @@ import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "react-modal";
 import CommonCode from "../../../models/requests/CommonCode";
-import { getOrElse, isError, post } from "../../../../servicies/AxiosWrapper";
 import messages from "../../../../public/locales/messages";
+import {
+  useGetParents,
+  useUpdateCommonCode,
+} from "../../../../servicies/CommonCodeServices";
 
 function CommonCodeUpdateModal(props: {
   isOpen: boolean;
   closeModal: Function;
   data: CommonCode;
 }) {
+  const getParents = useGetParents();
+  const updateCommonCode = useUpdateCommonCode();
+
   const [parentCodes, setParentCodes] = useState<CommonCode[]>([]);
 
   const nameRef = useRef<HTMLInputElement | null>(null);
@@ -20,9 +26,7 @@ function CommonCodeUpdateModal(props: {
 
     console.log("effect");
 
-    getOrElse<CommonCode[]>("/commonCode/parents", {}, []).then((res) => {
-      setParentCodes(res);
-    });
+    getParents().then(setParentCodes);
   }, [props]);
 
   const {
@@ -41,18 +45,13 @@ function CommonCodeUpdateModal(props: {
   const onSubmit = (data: CommonCode) => {
     data.code = props.data.code;
 
-    post<string>("/commonCode/update", data).then((res) => {
-      if (isError(res)) {
-        alert(res.errorMessage);
-        nameRef.current?.focus();
-      } else {
-        if (res === "SUC") {
-          props.closeModal(true);
-        } else {
-          nameRef.current?.focus();
-        }
+    updateCommonCode(data).then((msg) => {
+      alert(msg);
 
-        alert(messages[res]);
+      if (messages["SUC"] === msg) {
+        props.closeModal(true);
+      } else {
+        nameRef.current?.focus();
       }
     });
   };

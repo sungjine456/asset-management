@@ -1,9 +1,11 @@
 import { useForm } from "react-hook-form";
 import Asset from "../models/requests/Asset";
-import { post } from "../../servicies/AxiosWrapper";
 import React from "react";
+import { useAddAsset } from "../../servicies/AssetService";
 
 function AddAsset() {
+  const addAsset = useAddAsset();
+
   const {
     register,
     handleSubmit,
@@ -11,7 +13,7 @@ function AddAsset() {
   } = useForm<Asset>({
     mode: "onBlur",
     defaultValues: {
-      id: "id for test",
+      id: "",
       name: "",
       price: 0,
       count: 0,
@@ -19,7 +21,7 @@ function AddAsset() {
   });
 
   const onSubmit = (data: Asset) => {
-    post<boolean>("/asset", data).then((res) => {
+    addAsset(data).then((res) => {
       console.log(res);
     });
   };

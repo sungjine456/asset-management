@@ -1,10 +1,12 @@
 import { ChangeEvent, useState } from "react";
 import Asset, { EmptyAsset } from "../models/requests/Asset";
-import { get, isError } from "../../servicies/AxiosWrapper";
 import React from "react";
+import { useGetAsset } from "../../servicies/AssetService";
 
 function GetAsset() {
-  const [id, setId] = useState<String>("");
+  const getAsset = useGetAsset();
+
+  const [id, setId] = useState<string>("");
   const [asset, setAsset] = useState<Asset>(EmptyAsset);
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -12,11 +14,7 @@ function GetAsset() {
   };
 
   const onClickHandler = () => {
-    get<Asset>(`/asset/${id}`).then((res) => {
-      if (!isError(res)) {
-        setAsset(res);
-      }
-    });
+    getAsset(id).then(setAsset);
   };
 
   return (

@@ -2,12 +2,13 @@ import { useForm } from "react-hook-form";
 import CommonCode from "../../../models/requests/CommonCode";
 import { useLocation, useNavigate } from "react-router-dom";
 import message from "../../../../public/locales/messages";
-import { isError, post } from "../../../../servicies/AxiosWrapper";
 import React, { useRef } from "react";
+import { useAddCommonCode } from "../../../../servicies/CommonCodeServices";
 
-function CommonAdd() {
+function CommonCodeAdd() {
   const navigate = useNavigate();
   const location = useLocation();
+  const addCommonCode = useAddCommonCode();
 
   const codeRef = useRef<HTMLInputElement | null>(null);
 
@@ -25,19 +26,14 @@ function CommonAdd() {
   });
 
   const onSubmit = (data: CommonCode) => {
-    post<string>("/commonCode", data).then((res) => {
-      if (isError(res)) {
-        alert(res.errorMessage);
+    addCommonCode(data).then((msg) => {
+      if (message["SUC"] !== msg) {
         codeRef.current?.focus();
       } else {
-        if (res === "SUC") {
-          navigate("/settings/commonCode/list");
-        } else {
-          codeRef.current?.focus();
-        }
-
-        alert(message[res]);
+        navigate("/settings/commonCode/list");
       }
+
+      alert(msg);
     });
   };
 
@@ -91,4 +87,4 @@ function CommonAdd() {
   );
 }
 
-export default CommonAdd;
+export default CommonCodeAdd;

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Stock from "../../../models/requests/Stock";
 import { Link } from "react-router-dom";
-import { getOrElse } from "../../../../servicies/AxiosWrapper";
+import { useGetStocks } from "../../../../servicies/StockServices";
 
 function StockList() {
+  const getList = useGetStocks();
+
   const [list, setList] = useState<Stock[]>([]);
 
   useEffect(() => {
-    getOrElse<Stock[]>("/stock/list", {}, []).then((res) => {
-      setList(res);
-    });
+    getList().then(setList);
   }, []);
 
   return (

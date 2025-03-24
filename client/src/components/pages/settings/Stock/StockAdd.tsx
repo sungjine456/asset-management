@@ -1,12 +1,13 @@
 import { useForm } from "react-hook-form";
 import Stock from "../../../models/requests/Stock";
 import { useNavigate } from "react-router-dom";
-import message from "../../../../public/locales/messages";
-import { isError, post } from "../../../../servicies/AxiosWrapper";
+import messages from "../../../../public/locales/messages";
 import React, { useRef } from "react";
+import { useAddStock } from "../../../../servicies/StockServices";
 
 function StockAdd() {
   const navigate = useNavigate();
+  const addStock = useAddStock();
 
   const codeRef = useRef<HTMLInputElement | null>(null);
 
@@ -23,19 +24,14 @@ function StockAdd() {
   });
 
   const onSubmit = (data: Stock) => {
-    post<string>("/stock", data).then((res) => {
-      if (isError(res)) {
-        alert(res.errorMessage);
-        codeRef.current?.focus();
+    addStock(data).then((msg) => {
+      if (messages["SUE"] === msg) {
+        navigate("/settings/stock/list");
       } else {
-        if (res === "SUC") {
-          navigate("/settings/stock/list");
-        } else {
-          codeRef.current?.focus();
-        }
-
-        alert(message[res]);
+        codeRef.current?.focus();
       }
+
+      alert(msg);
     });
   };
 

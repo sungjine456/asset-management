@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import CommonCode, { EmptyCommon } from "../../../models/requests/CommonCode";
 import { Link } from "react-router-dom";
-import { getOrElse, del, isError } from "../../../../servicies/AxiosWrapper";
 import messages from "../../../../public/locales/messages";
 import CommonCodeUpdateModal from "./CommonCodeUpdateModal";
+import {
+  useDeleteCommonCode,
+  useGetCommonCodes,
+} from "../../../../servicies/CommonCodeServices";
 
 function CommonList() {
+  const deleteCommonCode = useDeleteCommonCode();
+  const getCommonCodes = useGetCommonCodes();
+
   const [list, setList] = useState<CommonCode[]>([]);
   const [modalData, setModalData] = useState<CommonCode>(EmptyCommon);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -15,15 +21,11 @@ function CommonList() {
   }, []);
 
   const deleteCode = (code: string) => {
-    del<string>(`/commonCode/${code}`).then((res) => {
-      if (isError(res)) {
-        alert(res.errorMessage);
-      } else {
-        if (res === "SUC") {
-          window.location.reload();
-        }
+    deleteCommonCode(code).then((msg) => {
+      alert(msg);
 
-        alert(messages[res]);
+      if (messages["SUC"] === msg) {
+        window.location.reload();
       }
     });
   };
@@ -43,9 +45,7 @@ function CommonList() {
   };
 
   const getList = () => {
-    getOrElse<CommonCode[]>("/commonCode/list", {}, []).then((res) => {
-      setList(res);
-    });
+    getCommonCodes().then(setList);
   };
 
   return (
