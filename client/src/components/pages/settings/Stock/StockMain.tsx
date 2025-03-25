@@ -5,7 +5,7 @@ function StockMain() {
   return (
     <>
       <h2>
-        <Link to="/settings/stock/list">주식 설정</Link>
+        <Link to="/settings/stock/list">주식종목 설정</Link>
       </h2>
       <Outlet />
     </>

@@ -12,14 +12,18 @@ import lombok.ToString;
 public class StockDto {
     
     private String code;
+    private String index;
+    private String industry;
     private String name;
 
     public StockDto(StockEntity entity) {
         code = entity.getCode();
+        index = entity.getIndex();
+        industry = entity.getIndustry();
         name = entity.getName();
     }
 
     public StockEntity getEntity() {
-        return new StockEntity(code, name);
+        return new StockEntity(code, index, industry, name);
     }
 }

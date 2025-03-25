@@ -10,7 +10,7 @@ function Main() {
           <Link to="/settings/commonCode/list">공통코드</Link>
         </li>
         <li>
-          <Link to="/settings/stock/list">주식</Link>
+          <Link to="/settings/stock/list">주식종목</Link>
         </li>
       </ol>
     </>

@@ -17,7 +17,14 @@ import lombok.Setter;
 public class StockEntity {
 
     @Id
+    @Column(length = 6)
     private String code;
+
+    @Column
+    private String index;
+
+    @Column
+    private String industry;
 
     @Column
     private String name;

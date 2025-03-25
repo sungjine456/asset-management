@@ -14,7 +14,7 @@ function StockList() {
 
   return (
     <>
-      <h3>등록된 주식 목록</h3>
+      <h3>등록된 주식종목 목록</h3>
       <div className="d-flex-column" style={{ alignItems: "center" }}>
         <div className="d-flex-column">
           <table>

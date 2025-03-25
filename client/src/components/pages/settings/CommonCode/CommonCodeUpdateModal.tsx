@@ -24,8 +24,6 @@ function CommonCodeUpdateModal(props: {
     setValue("name", props.data.name);
     setValue("parent", props.data.parent);
 
-    console.log("effect");
-
     getParents().then(setParentCodes);
   }, [props]);
 
