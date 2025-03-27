@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 import CommonCode from "../../../models/requests/CommonCode";
 import { useLocation, useNavigate } from "react-router-dom";
 import message from "../../../../public/locales/messages";
@@ -35,6 +35,14 @@ function CommonCodeAdd() {
 
       alert(msg);
     });
+  };
+
+  const onInvalid = (data: FieldErrors) => {
+    if (data.code) {
+      alert(data.code.message);
+    } else if (data.name) {
+      alert(data.name.message);
+    }
   };
 
   return (
@@ -79,7 +87,11 @@ function CommonCodeAdd() {
             })}
           ></input>
         </div>
-        <button className="btn" type="submit" onClick={handleSubmit(onSubmit)}>
+        <button
+          className="btn"
+          type="submit"
+          onClick={handleSubmit(onSubmit, onInvalid)}
+        >
           등록
         </button>
       </form>

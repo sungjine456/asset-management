@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 import Stock from "../../../models/requests/Stock";
 import { useNavigate } from "react-router-dom";
 import messages from "../../../../public/locales/messages";
@@ -69,6 +69,14 @@ function StockAdd() {
     });
   };
 
+  const onInvalid = (data: FieldErrors) => {
+    if (data.code) {
+      alert(data.code.message);
+    } else if (data.name) {
+      alert(data.name.message);
+    }
+  };
+
   return (
     <>
       <h3>주식종목 등록</h3>
@@ -129,7 +137,11 @@ function StockAdd() {
             maxLength={10}
           ></input>
         </div>
-        <button className="btn" type="submit" onClick={handleSubmit(onSubmit)}>
+        <button
+          className="btn"
+          type="submit"
+          onClick={handleSubmit(onSubmit, onInvalid)}
+        >
           등록
         </button>
       </form>

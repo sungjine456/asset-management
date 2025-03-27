@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 import Modal from "react-modal";
 import CommonCode from "../../../models/requests/CommonCode";
 import messages from "../../../../public/locales/messages";
@@ -54,6 +54,12 @@ function CommonCodeUpdateModal(props: {
     });
   };
 
+  const onInvalid = (data: FieldErrors) => {
+    if (data.name) {
+      alert(data.name.message);
+    }
+  };
+
   return (
     <Modal isOpen={props.isOpen} onRequestClose={() => props.closeModal()}>
       <div>
@@ -95,7 +101,7 @@ function CommonCodeUpdateModal(props: {
           <button
             className="btn"
             type="submit"
-            onClick={handleSubmit(onSubmit)}
+            onClick={handleSubmit(onSubmit, onInvalid)}
           >
             등록
           </button>
