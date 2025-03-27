@@ -1,4 +1,4 @@
-const Messages: { [key: string]: any } = {
+const Messages: { [key: string]: string } = {
   SUC: "성공했습니다.",
   FAIL: "실패했습니다.",
 

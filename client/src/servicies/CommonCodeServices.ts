@@ -1,38 +1,20 @@
-import { del, getOrElse, isError, post } from "./AxiosWrapper";
+import { del, getOrElse, post } from "./AxiosWrapper";
 import CommonCode from "../components/models/requests/CommonCode";
-import messages from "../public/locales/messages";
+import Result from "../components/models/services/Result";
+import { makeResult } from "./Utils";
 
-export function useAddCommonCode(): (data: CommonCode) => Promise<string> {
+export function useAddCommonCode(): (data: CommonCode) => Promise<Result> {
   return (data: CommonCode) =>
-    post<string>("/commonCode", data).then((res) => {
-      if (isError(res)) {
-        return res.errorMessage;
-      }
-
-      return messages[res];
-    });
+    post<string>("/commonCode", data).then(makeResult);
 }
 
-export function useUpdateCommonCode(): (data: CommonCode) => Promise<string> {
+export function useUpdateCommonCode(): (data: CommonCode) => Promise<Result> {
   return (data: CommonCode) =>
-    post<string>("/commonCode/update", data).then((res) => {
-      if (isError(res)) {
-        return res.errorMessage;
-      }
-
-      return messages[res];
-    });
+    post<string>("/commonCode/update", data).then(makeResult);
 }
 
-export function useDeleteCommonCode(): (code: string) => Promise<string> {
-  return (code: string) =>
-    del<string>(`/commonCode/${code}`).then((res) => {
-      if (isError(res)) {
-        return res.errorMessage;
-      }
-
-      return messages[res];
-    });
+export function useDeleteCommonCode(): (code: string) => Promise<Result> {
+  return (code: string) => del<string>(`/commonCode/${code}`).then(makeResult);
 }
 
 export function useGetCommonCodes(): () => Promise<CommonCode[]> {

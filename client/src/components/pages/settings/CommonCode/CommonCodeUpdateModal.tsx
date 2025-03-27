@@ -43,10 +43,10 @@ function CommonCodeUpdateModal(props: {
   const onSubmit = (data: CommonCode) => {
     data.code = props.data.code;
 
-    updateCommonCode(data).then((msg) => {
-      alert(msg);
+    updateCommonCode(data).then((result) => {
+      alert(result.msg);
 
-      if (messages["SUC"] === msg) {
+      if (result.isSuccess) {
         props.closeModal(true);
       } else {
         nameRef.current?.focus();

@@ -26,14 +26,14 @@ function CommonCodeAdd() {
   });
 
   const onSubmit = (data: CommonCode) => {
-    addCommonCode(data).then((msg) => {
-      if (message["SUC"] !== msg) {
-        codeRef.current?.focus();
-      } else {
+    addCommonCode(data).then((result) => {
+      if (result.isSuccess) {
         navigate("/settings/commonCode/list");
+      } else {
+        codeRef.current?.focus();
       }
 
-      alert(msg);
+      alert(result.msg);
     });
   };
 

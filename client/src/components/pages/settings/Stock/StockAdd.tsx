@@ -58,14 +58,14 @@ function StockAdd() {
   });
 
   const onSubmit = (data: Stock) => {
-    addStock(data).then((msg) => {
-      if (messages["SUE"] === msg) {
+    addStock(data).then((result) => {
+      if (result.isSuccess) {
         navigate("/settings/stock/list");
       } else {
         codeRef.current?.focus();
       }
 
-      alert(msg);
+      alert(result.msg);
     });
   };
 

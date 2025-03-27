@@ -75,4 +75,4 @@ const postOrElse = <T>(url: string, data: {}, header: {} = {}, or: T) => {
   return orElse<T>(wrapper<T>({ method: "post", url, data, header }), or);
 };
 
-export { get, getOrElse, post, postOrElse, del, isError };
+export { get, getOrElse, post, postOrElse, del, isError, ServerError };

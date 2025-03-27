@@ -1,16 +1,10 @@
 import Stock from "../components/models/requests/Stock";
-import messages from "../public/locales/messages";
-import { getOrElse, isError, post } from "./AxiosWrapper";
+import Result from "../components/models/services/Result";
+import { getOrElse, post } from "./AxiosWrapper";
+import { makeResult } from "./Utils";
 
-export function useAddStock(): (data: Stock) => Promise<string> {
-  return (data: Stock) =>
-    post<string>("/stock", data).then((res) => {
-      if (isError(res)) {
-        return res.errorMessage;
-      } else {
-        return messages[res];
-      }
-    });
+export function useAddStock(): (data: Stock) => Promise<Result> {
+  return (data: Stock) => post<string>("/stock", data).then(makeResult);
 }
 
 export function useGetStocks(): () => Promise<Stock[]> {
