@@ -67,7 +67,7 @@ function CommonList() {
                 <th>공통코드</th>
                 <th>상위 공통코드</th>
                 <th>코드명</th>
-                <th style={{ minWidth: "30px" }}></th>
+                <th>비고</th>
               </tr>
             </thead>
             <tbody>

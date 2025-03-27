@@ -29,11 +29,12 @@ form {
   border-radius: 20%;
   text-decoration: none;
   color: black;
-  background-color: rgb(207, 207, 207);
+  background-color: #7effee;
+  border-color: #b7b7b7;
 
   &:hover {
     color: rgb(65, 65, 65);
-    background-color: rgb(160, 160, 160);
+    background-color: #a8f5e9;
   }
 }
 
@@ -57,4 +58,18 @@ th {
     height: 400px;
     position: static !important;
   }
+}
+
+input[type="text"] {
+  border-radius: 8px;
+  height: 25px;
+  font-size: 16px;
+  border: 3px solid #5d5d5d;
+}
+
+select {
+  border-radius: 8px;
+  height: 34px;
+  font-size: 16px;
+  border: 3px solid #5d5d5d;
 }
