@@ -37,12 +37,15 @@ function StockAdd() {
 
       setIndexes(idx);
       setIndustries(indus);
+      setValue("index", idx[0]);
+      setValue("industry", indus[0]);
     }
   }, [query.data]);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { isSubmitted, errors },
   } = useForm<Stock>({
     mode: "onBlur",
